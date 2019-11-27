@@ -125,9 +125,6 @@ paths:
         '400':
           description: Bad Request
           content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
             application/xml:
               schema:
                 type: object
@@ -135,6 +132,28 @@ paths:
                   ecode:
                     type: integer
                     description: 'error code; 2:parse error, 3:jwt error, 4:duplicate'
+            multipart/form-data:
+              schema:
+                type: object
+                properties: {}
+            text/html:
+              schema:
+                type: object
+                properties:
+                  ecode:
+                    type: string
+                    description: 'error code; 2:parse error, 3:jwt error, 4:duplicate'
+            text/plain:
+              schema:
+                type: object
+                properties: {}
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ecode:
+                    type: string
+                    description: 'error code: 2:parse error, 3:jwt error, 4:duplicate'
       tags:
         - Gateways
       operationId: ''
