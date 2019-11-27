@@ -609,208 +609,6 @@ paths:
       tags:
         - Rooms
       description: Delete the room based on the id
-  /devices/:
-    get:
-      summary: Get all devices
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      description: Get all devices (light switches) this user has.
-      tags:
-        - Devices
-      parameters:
-        - schema:
-            type: number
-            minimum: 0
-            maximum: 0
-          in: query
-          name: offset
-          description: Pagination offset (from which record)
-        - schema:
-            type: number
-            minimum: 1
-          in: query
-          name: limit
-          description: Pagination limit (how many records returned)
-        - schema:
-            type: string
-            pattern: "(\\d+)(,\\d+)*"
-          in: query
-          name: fields
-          description: Show only json object with comma separated keys
-    post:
-      summary: Create a device
-      description: Create a new device
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  collections:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      tags:
-        - Devices
-    put:
-      summary: Update one or more devices
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
-                type: object
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              items:
-                type: object
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  collections:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
-              type: array
-      tags:
-        - Devices
-    patch:
-      summary: Patch one or more devices
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
-                type: object
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              items:
-                type: object
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  collections:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
-              type: array
-      tags:
-        - Devices
-    delete:
-      summary: Delete one or more devices
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
-                type: object
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      tags:
-        - Devices
-    parameters: []
   '/devices/{id}':
     parameters:
       - type: string
@@ -1403,6 +1201,249 @@ paths:
       tags:
         - Trackers
       description: Delete the tracker based on the id
+  /devices/:
+    get:
+      summary: Get all devices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: Get all devices (light switches) this user has.
+      tags:
+        - Devices
+      parameters:
+        - schema:
+            type: number
+            minimum: 0
+            maximum: 0
+          in: query
+          name: offset
+          description: Pagination offset (from which record)
+        - schema:
+            type: number
+            minimum: 1
+          in: query
+          name: limit
+          description: Pagination limit (how many records returned)
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    post:
+      summary: Create a device
+      description: Create a new device
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Devices
+    put:
+      summary: Update one or more devices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+              type: array
+      tags:
+        - Devices
+    patch:
+      summary: Patch one or more devices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+              type: array
+      tags:
+        - Devices
+    delete:
+      summary: Delete one or more devices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Devices
+    parameters: []
+  /users:
+    post:
+      summary: ''
+      operationId: post-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  c:
+                    type: number
+                    description: '1:ok'
+                  jwt:
+                    type: string
+                    description: json web token
+                  muri:
+                    type: string
+                  top:
+                    type: string
+                  mcrt:
+                    type: string
+                  mkey:
+                    type: string
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mn:
+                  type: string
+                  description: mobile number
+                pwd:
+                  type: string
+                  description: password
+        description: ''
 components:
   schemas:
     Gateway:
