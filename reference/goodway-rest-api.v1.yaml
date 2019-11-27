@@ -82,8 +82,7 @@ paths:
                   description: device name ;  optional
               required:
                 - id
-            examples:
-              example-1: {}
+            examples: {}
         description: ''
       responses:
         '200':
@@ -95,8 +94,10 @@ paths:
                 properties:
                   tk01:
                     type: string
+                    description: 預存在 設備端
                   tk02:
                     type: string
+                    description: 串接傳值用 (ID)
                   muris:
                     type: array
                     items:
@@ -127,6 +128,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  ecode:
+                    type: integer
+                    description: 'error code; 2:parse error, 3:jwt error, 4:duplicate'
       tags:
         - Gateways
       operationId: ''
@@ -401,6 +409,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Room'
+            examples:
+              example-1: {}
       responses:
         '200':
           description: OK
@@ -1649,6 +1659,7 @@ components:
         href:
           type: string
           example: /rooms/fdae22a2-a4c6-461b-83c3-d0368dd46329
+      x-examples: {}
     Error:
       title: Error
       type: object
