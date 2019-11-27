@@ -72,18 +72,19 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  collections:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Gateway'
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: uuid
+                dn:
+                  type: string
+                  description: device name ;  optional
+              required:
+                - id
+            examples:
+              example-1: {}
+        description: ''
       responses:
         '200':
           description: OK
@@ -92,14 +93,34 @@ paths:
               schema:
                 type: object
                 properties:
-                  kind:
+                  tk01:
                     type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
+                  tk02:
+                    type: string
+                  muris:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Gateway'
+                      type: object
+                      properties:
+                        t:
+                          type: integer
+                          description: '1:user 2:device'
+                        uri:
+                          type: string
+                        topic:
+                          type: string
+                        crt:
+                          type: string
+                        key:
+                          type: string
+                          description: private key
+                        rca:
+                          type: string
+                          description: root ca
+          headers:
+            'Authorization: Bearer "JWT"':
+              schema:
+                type: string
         '400':
           description: Bad Request
           content:
@@ -108,6 +129,7 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
         - Gateways
+      operationId: ''
     put:
       summary: Update one or more gateways
       responses:
@@ -227,7 +249,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Delete the gateway
+      summary: the gateway
       operationId: ''
       description: ''
       responses:
@@ -1416,19 +1438,24 @@ paths:
                 type: object
                 properties:
                   c:
-                    type: number
                     description: '1:ok'
+                    type: integer
                   jwt:
                     type: string
                     description: json web token
                   muri:
                     type: string
-                  top:
+                  topic:
                     type: string
                   mcrt:
                     type: string
+                    description: cert
                   mkey:
                     type: string
+                    description: private key
+                  mrca:
+                    type: string
+                    description: root ca
       tags:
         - Users
       requestBody:
@@ -1443,6 +1470,46 @@ paths:
                 pwd:
                   type: string
                   description: password
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+          text/html:
+            schema:
+              type: object
+              properties: {}
+          text/plain:
+            schema:
+              type: object
+              properties: {}
+          application/EDI-X12:
+            schema:
+              type: object
+              properties: {}
+          application/EDIFACT:
+            schema:
+              type: object
+              properties: {}
+          application/atom+xml:
+            schema:
+              type: object
+              properties: {}
+          application/font-woff:
+            schema:
+              type: object
+              properties: {}
+          application/gzip:
+            schema:
+              type: object
+              properties: {}
+          application/javascript:
+            schema:
+              type: object
+              properties: {}
         description: ''
 components:
   schemas:
