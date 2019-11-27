@@ -1,0 +1,1585 @@
+openapi: 3.0.0
+info:
+  title: Goodway Smart Home REST API
+  version: 0.0.2
+  description: |-
+    目前 CES 沒有要實作的部分：
+    1. pagination (offset, limit)
+    2. 部分選取 (field)
+  contact:
+    name: John Peng
+    email: john_peng@goodway.com.tw
+    url: goodeway.com
+  termsOfService: 'http://goodway.com/terms-of-use/'
+  license:
+    name: Goodway License
+    url: 'http://goodway.com/license/'
+servers:
+  - url: 'http://api.goodway.com'
+    description: Production
+  - description: Development
+    url: 'http://api.goodway.com'
+paths:
+  /gateways:
+    get:
+      summary: Get all gateways
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Gateway'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: Get all gateways (light switches) this user has.
+      tags:
+        - Gateways
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: offset
+          description: Pagination offset (from which record)
+        - schema:
+            type: string
+          in: query
+          name: limit
+          description: Pagination limit (how many records returned)
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    post:
+      summary: Create a gateway
+      description: Create a new gateway
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Gateway'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Gateway'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Gateways
+    put:
+      summary: Update one or more gateways
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Gateway'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Gateway'
+              type: array
+      tags:
+        - Gateways
+    patch:
+      summary: Patch one or more gateways
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Gateway'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Gateway'
+              type: array
+      tags:
+        - Gateways
+    delete:
+      summary: Delete one or more gateways
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Gateway'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Gateways
+      description: ''
+    parameters: []
+  '/gateways/{id}':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Delete the gateway
+      operationId: ''
+      description: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Gateways
+      parameters:
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    put:
+      summary: Update the gateway
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gateway'
+      tags:
+        - Gateways
+    patch:
+      summary: Patch the gateway
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gateway'
+      tags:
+        - Gateways
+    delete:
+      summary: Delete the gateway
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Gateways
+      description: Delete the gateway based on the id
+  /rooms/:
+    get:
+      summary: Get all rooms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: Get all rooms (light switches) this user has.
+      tags:
+        - Rooms
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: offset
+          description: Pagination offset (from which record)
+        - schema:
+            type: string
+          in: query
+          name: limit
+          description: Pagination limit (how many records returned)
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    post:
+      summary: Create a room
+      description: Create a new room
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Rooms
+    put:
+      summary: Update one or more rooms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+              type: array
+      tags:
+        - Rooms
+    patch:
+      summary: Patch one or more rooms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+              type: array
+      tags:
+        - Rooms
+    delete:
+      summary: Delete one or more rooms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Rooms
+    parameters: []
+  '/rooms/{id}':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Delete the room
+      operationId: ''
+      description: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Rooms
+      parameters:
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    put:
+      summary: Update the room
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+      tags:
+        - Rooms
+    patch:
+      summary: Patch the room
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+      tags:
+        - Rooms
+    delete:
+      summary: Delete the room
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Rooms
+      description: Delete the room based on the id
+  /devices/:
+    get:
+      summary: Get all devices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: Get all devices (light switches) this user has.
+      tags:
+        - Devices
+      parameters:
+        - schema:
+            type: number
+            minimum: 0
+            maximum: 0
+          in: query
+          name: offset
+          description: Pagination offset (from which record)
+        - schema:
+            type: number
+            minimum: 1
+          in: query
+          name: limit
+          description: Pagination limit (how many records returned)
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    post:
+      summary: Create a device
+      description: Create a new device
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Devices
+    put:
+      summary: Update one or more devices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+              type: array
+      tags:
+        - Devices
+    patch:
+      summary: Patch one or more devices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+              type: array
+      tags:
+        - Devices
+    delete:
+      summary: Delete one or more devices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Devices
+    parameters: []
+  '/devices/{id}':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Delete the device
+      operationId: ''
+      description: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Devices
+      parameters:
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    put:
+      summary: Update the device
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+      tags:
+        - Devices
+    patch:
+      summary: Patch the device
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                kind:
+                  type: string
+                  example: collection
+                  pattern: ^collection$
+                contents:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Device'
+          application/xml:
+            schema:
+              type: object
+        description: ''
+      tags:
+        - Devices
+    delete:
+      summary: Delete the device
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Devices
+      description: Delete the device based on the id
+  /assistant/execute/:
+    parameters: []
+    post:
+      summary: Execute a scene.
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: 'For command such as "Alexa, execute scene {scene}"'
+      tags:
+        - Virtual assistant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scene:
+                  type: string
+                  example: away
+  /assistant/on/:
+    post:
+      summary: 'Turn on all lights [in the living room]'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: 'For command such as "Alexa, turn on all lights" or "Alexa, turn on all lights in the living room".'
+      tags:
+        - Virtual assistant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location:
+                  type: string
+                  example: living room
+        description: ''
+    parameters: []
+  /assistant/off/:
+    post:
+      summary: 'Turn off all lights [in the living room]'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: 'For command such as "Alexa, turn off all lights" or "Alexa, turn off all lights in the living room".'
+      tags:
+        - Virtual assistant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location:
+                  type: string
+                  example: living room
+        description: ''
+    parameters: []
+  /assistant/tracker/:
+    parameters: []
+    post:
+      summary: Find an item
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: 'Find the item such for command such as "Alexa, where is my wallet" where "wallet" is the item'
+      tags:
+        - Virtual assistant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item:
+                  type: string
+                  example: wallet
+  '/gateways/{id}/rooms/':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get all the rooms within this gateway
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                kind:
+                  type: string
+                  example: collection
+                  pattern: ^collection$
+                contents:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Room'
+        description: ''
+      tags:
+        - Rooms
+      description: Get all the rooms within this gateway
+  '/rooms/{id}/devices':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get all devices within the room
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Devices
+      description: Get all devices within the room
+  /trackers/:
+    get:
+      summary: Get all trackers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tracker'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: Get all trackers (light switches) this user has.
+      tags:
+        - Trackers
+      parameters:
+        - schema:
+            type: number
+            minimum: 0
+            maximum: 0
+          in: query
+          name: offset
+          description: Pagination offset (from which record)
+        - schema:
+            type: number
+            minimum: 1
+          in: query
+          name: limit
+          description: Pagination limit (how many records returned)
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    post:
+      summary: Create a tracker
+      description: Create a new tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tracker'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tracker'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Trackers
+    put:
+      summary: Update one or more trackers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tracker'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tracker'
+              type: array
+      tags:
+        - Trackers
+    patch:
+      summary: Patch one or more trackers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tracker'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  collections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tracker'
+              type: array
+      tags:
+        - Trackers
+    delete:
+      summary: Delete one or more trackers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  kind:
+                    type: string
+                    example: collection
+                    pattern: ^collection$
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tracker'
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Trackers
+    parameters: []
+  '/trackers/{id}':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Delete the tracker
+      operationId: ''
+      description: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tracker'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Trackers
+      parameters:
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    put:
+      summary: Update the tracker
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tracker'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tracker'
+      tags:
+        - Trackers
+    patch:
+      summary: Patch the tracker
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tracker'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                kind:
+                  type: string
+                  example: collection
+                  pattern: ^collection$
+                contents:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tracker'
+          application/xml:
+            schema:
+              type: object
+        description: ''
+      tags:
+        - Trackers
+    delete:
+      summary: Delete the tracker
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tracker'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Trackers
+      description: Delete the tracker based on the id
+components:
+  schemas:
+    Gateway:
+      title: Gateway
+      type: object
+      x-examples: {}
+      description: ''
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 1f00675c-d18f-4ff6-b042-fdbe3403939a
+        kind:
+          type: string
+          example: Gateway
+        model:
+          type: string
+          example: YK123
+        rooms:
+          type: object
+          properties:
+            kind:
+              type: string
+              example: collections
+              pattern: ^collections$
+            contents:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                partial:
+                  type: boolean
+                  example: true
+                kind:
+                  type: string
+                  example: Room
+        devices:
+          type: object
+          properties:
+            kind:
+              type: string
+              example: collections
+              pattern: ^collections$
+            contents:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                partial:
+                  example: true
+                  type: boolean
+                kind:
+                  type: string
+                  example: Device
+        name:
+          type: string
+          example: My gateway
+        href:
+          type: string
+          example: /gateways/1f00675c-d18f-4ff6-b042-fdbe3403939a
+    Device:
+      title: Device
+      type: object
+      x-examples: {}
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 3519b134-f047-420b-ba20-a4b5490ea4c0
+        kind:
+          type: string
+          example: lightSwitchDevice
+        model:
+          type: string
+          example: YK123
+        name:
+          type: string
+          example: Living room light
+        roomID:
+          type: string
+          example: fdae22a2-a4c6-461b-83c3-d0368dd46329
+        gatewayID:
+          type: string
+          example: 1f00675c-d18f-4ff6-b042-fdbe3403939a
+        deviceStatuses:
+          type: array
+          items:
+            type: object
+            properties:
+              light:
+                type: string
+        href:
+          type: string
+          example: /device/3519b134-f047-420b-ba20-a4b5490ea4c0
+      required:
+        - id
+        - model
+        - name
+        - gatewayID
+    Room:
+      title: Room
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: fdae22a2-a4c6-461b-83c3-d0368dd46329
+        kind:
+          type: string
+          example: room
+          pattern: ^Room$
+        gatewayID:
+          type: string
+          example: 1f00675c-d18f-4ff6-b042-fdbe3403939a
+        devices:
+          type: object
+          properties:
+            kind:
+              type: string
+              example: collections
+              pattern: ^collections$
+            contents:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                partial:
+                  example: true
+                  type: boolean
+                kind:
+                  type: string
+                  example: Device
+        href:
+          type: string
+          example: /rooms/fdae22a2-a4c6-461b-83c3-d0368dd46329
+    Error:
+      title: Error
+      type: object
+      properties:
+        error:
+          type: string
+        developerMessage:
+          type: string
+        userMessage:
+          type: string
+        moreInfo:
+          type: string
+          example: 'https://xyz.com/doc/errors/101'
+    Tracker:
+      title: Tracker
+      type: object
+      properties:
+        id:
+          type: string
+        kind:
+          type: string
+          example: Tracker
+          pattern: ^Tracker$
+        model:
+          type: string
+        name:
+          type: string
+        href:
+          type: string
+  securitySchemes:
+    API Key - 1:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          refreshUrl: ''
+          scopes: []
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: []
