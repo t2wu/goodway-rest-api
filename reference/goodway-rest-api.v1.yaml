@@ -87,6 +87,7 @@ paths:
             type: string
           in: header
           name: 'Authorization: Bearer "JWT"'
+      requestBody: {}
     post:
       summary: Create a gateway
       description: Create a new gateway
@@ -143,7 +144,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  ecode:
+                  code:
                     type: integer
                     description: 'code; 2:parse error, 3:jwt error, 4:duplicate'
       tags:
@@ -1501,7 +1502,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  ecode:
+                  code:
                     type: integer
                     description: '2:parse error, 3:user error, 4:password error, 5:others'
       tags:
@@ -1581,7 +1582,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  ecode:
+                  code:
                     type: integer
                     description: 'error code; 2:parse error, 3:duplicate, 4:others'
       parameters:
