@@ -69,21 +69,16 @@ paths:
       summary: Create a gateway
       description: Create a new gateway
       requestBody:
+        description: ''
         content:
           application/json:
             schema:
               type: object
               properties:
-                id:
+                uuid:
                   type: string
-                  description: uuid
                 dn:
                   type: string
-                  description: device name ;  optional
-              required:
-                - id
-            examples: {}
-        description: ''
       responses:
         '200':
           description: OK
@@ -118,45 +113,25 @@ paths:
                         rca:
                           type: string
                           description: root ca
-          headers:
-            'Authorization: Bearer "JWT"':
-              schema:
-                type: string
+          headers: {}
         '400':
           description: Bad Request
           content:
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  ecode:
-                    type: integer
-                    description: 'error code; 2:parse error, 3:jwt error, 4:duplicate'
-            multipart/form-data:
-              schema:
-                type: object
-                properties: {}
-            text/html:
-              schema:
-                type: object
-                properties:
-                  ecode:
-                    type: string
-                    description: 'error code; 2:parse error, 3:jwt error, 4:duplicate'
-            text/plain:
-              schema:
-                type: object
-                properties: {}
             application/json:
               schema:
                 type: object
                 properties:
                   ecode:
-                    type: string
-                    description: 'error code: 2:parse error, 3:jwt error, 4:duplicate'
+                    type: integer
+                    description: 'code; 2:parse error, 3:jwt error, 4:duplicate'
       tags:
         - Gateways
       operationId: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization: Bearer "JWT"'
     put:
       summary: Update one or more gateways
       responses:
@@ -1485,6 +1460,16 @@ paths:
                   mrca:
                     type: string
                     description: root ca
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ecode:
+                    type: integer
+                    description: '2:parse error, 3:user error, 4:password error, 5:others'
       tags:
         - Users
       requestBody:
@@ -1540,6 +1525,48 @@ paths:
               type: object
               properties: {}
         description: ''
+  /gateways/jwt:
+    post:
+      summary: ''
+      operationId: post-gateways-jwt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gwjwt:
+                    type: string
+                    description: gateway jwt for initialing gateway
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ecode:
+                    type: integer
+                    description: 'error code; 2:parse error, 3:duplicate, 4:others'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization: Bearer "JWT"'
+      description: get gateway jwt from app for initialing gateway
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  description: "gateway's uuid"
+              required:
+                - uuid
 components:
   schemas:
     Gateway:
