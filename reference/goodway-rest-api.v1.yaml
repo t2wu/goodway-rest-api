@@ -32,36 +32,35 @@ paths:
                 type: object
                 properties:
                   gateways:
-                    type: object
-                    properties:
-                      '':
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            dn:
-                              type: string
-                            id:
-                              type: string
-                              description: "gateway's token02"
-                            muri:
-                              type: string
-                            mtopic:
-                              type: string
-                            mrca:
-                              type: string
-                            mcrt:
-                              type: string
-                            mkey:
-                              type: string
-                            devices:
-                              type: object
-                              properties:
-                                dn:
-                                  type: string
-                                id:
-                                  type: string
-                                  description: "device's token02"
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: "gateway's token02"
+                        dn:
+                          type: string
+                        muri:
+                          type: string
+                        mtopic:
+                          type: string
+                        mrca:
+                          type: string
+                        mcrt:
+                          type: string
+                        mkey:
+                          type: string
+                        devices:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                description: "device's token02"
+                              dn:
+                                type: string
         '400':
           description: Bad Request
       description: Get all gateways (light switches) this user has.
