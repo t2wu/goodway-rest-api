@@ -31,20 +31,39 @@ paths:
               schema:
                 type: object
                 properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Gateway'
+                  gateways:
+                    type: object
+                    properties:
+                      '':
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            dn:
+                              type: string
+                            id:
+                              type: string
+                              description: "gateway's token02"
+                            muri:
+                              type: string
+                            mtopic:
+                              type: string
+                            mrca:
+                              type: string
+                            mcrt:
+                              type: string
+                            mkey:
+                              type: string
+                            devices:
+                              type: object
+                              properties:
+                                dn:
+                                  type: string
+                                id:
+                                  type: string
+                                  description: "device's token02"
         '400':
           description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
       description: Get all gateways (light switches) this user has.
       tags:
         - Gateways
@@ -65,6 +84,10 @@ paths:
           in: query
           name: fields
           description: Show only json object with comma separated keys
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization: Bearer "JWT"'
     post:
       summary: Create a gateway
       description: Create a new gateway
@@ -1460,8 +1483,9 @@ paths:
                     description: json web token
                   muri:
                     type: string
-                  topic:
+                  mtopic:
                     type: string
+                    description: mqtt topic
                   mcrt:
                     type: string
                     description: cert
