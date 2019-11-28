@@ -89,10 +89,10 @@ paths:
                 properties:
                   tk01:
                     type: string
-                    description: 預存在 設備端
+                    description: tk01 saved for further implementation
                   tk02:
                     type: string
-                    description: 串接傳值用 (ID)
+                    description: tk02 used for connection (gateway ID)
                   muris:
                     type: array
                     items:
@@ -1227,7 +1227,7 @@ paths:
       tags:
         - Trackers
       description: Delete the tracker based on the id
-  /devices/:
+  /devices:
     get:
       summary: Get all devices
       responses:
@@ -1282,18 +1282,22 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  collections:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
+              type: object
+              properties:
+                t:
+                  type: integer
+                  description: '1:lightswitch, 2:tracker'
+                pid:
+                  type: string
+                  description: "gateway's token02;  required for t:1 (lightswitch) only"
+                uuid:
+                  type: string
+                dn:
+                  type: string
+              required:
+                - t
+                - uuid
+        description: ''
       responses:
         '200':
           description: OK
@@ -1302,22 +1306,29 @@ paths:
               schema:
                 type: object
                 properties:
-                  kind:
+                  tk01:
                     type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Device'
+                    description: tk01 saved for further implementation
+                  tk02:
+                    type: string
+                    description: 'for lightswitch (t:1) only; tk02 used for connection (device ID)'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse error, 3:device error, 4:gateway not exist, 5:gateway offline, 6:device duplicate'
       tags:
         - Devices
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization: Bearer "JWT"'
     put:
       summary: Update one or more devices
       responses:
@@ -1567,6 +1578,8 @@ paths:
                   description: "gateway's uuid"
               required:
                 - uuid
+      tags:
+        - Gateways
 components:
   schemas:
     Gateway:
