@@ -41,18 +41,25 @@ paths:
                           description: "gateway's token02"
                         dn:
                           type: string
+                          description: device name
                         muri:
                           type: string
+                          description: mqtt uri
                         mtopic:
                           type: string
+                          description: mqtt topic
                         mrca:
                           type: string
+                          description: mqtt root ca
                         mcrt:
                           type: string
+                          description: mqtt crt
                         mkey:
                           type: string
+                          description: mqtt key
                         mcid:
-                          type: string                          
+                          type: string
+                          description: mqtt client id
                         devices:
                           type: array
                           items:
