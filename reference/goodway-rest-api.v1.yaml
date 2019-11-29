@@ -51,6 +51,8 @@ paths:
                           type: string
                         mkey:
                           type: string
+                        mcid:
+                          type: string                          
                         devices:
                           type: array
                           items:
@@ -136,6 +138,9 @@ paths:
                         rca:
                           type: string
                           description: root ca
+                        cid:
+                          type: string
+                          description: client id
           headers: {}
         '400':
           description: Bad Request
@@ -1495,6 +1500,9 @@ paths:
                   mrca:
                     type: string
                     description: root ca
+                  mcid:
+                    type: string
+                    description: mqtt client id
         '400':
           description: Bad Request
           content:
