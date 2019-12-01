@@ -70,6 +70,9 @@ paths:
                                 description: "device's token02"
                               dn:
                                 type: string
+                              status:
+                                type: integer
+                                description: '1:on, 2:off'
         '400':
           description: Bad Request
       description: Get all gateways (light switches) this user has.
