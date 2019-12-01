@@ -128,29 +128,33 @@ paths:
                   tk02:
                     type: string
                     description: tk02 used for connection (gateway ID)
-                  muris:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        t:
-                          type: integer
-                          description: '1:user 2:device'
-                        uri:
-                          type: string
-                        topic:
-                          type: string
-                        crt:
-                          type: string
-                        key:
-                          type: string
-                          description: private key
-                        rca:
-                          type: string
-                          description: root ca
-                        cid:
-                          type: string
-                          description: client id
+                  muri:
+                    type: string
+                    description: mqtt uri
+                  mtopic:
+                    type: string
+                    description: mqtt topic
+                  mcert:
+                    type: string
+                  mkey:
+                    type: string
+                  mrca:
+                    type: string
+                    description: mqtt root ca
+                  mcid:
+                    type: string
+                    description: mqtt client id
+                  mport:
+                    type: integer
+                  umtopic:
+                    type: string
+                    description: "user's mqtt topic"
+                  umuri:
+                    type: string
+                    description: "user's mqtt uri"
+                  umport:
+                    type: integer
+                    description: "user's mqtt port"
           headers: {}
         '400':
           description: Bad Request
