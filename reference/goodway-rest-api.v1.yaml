@@ -48,18 +48,9 @@ paths:
                         mtopic:
                           type: string
                           description: mqtt topic; ; for publishing
-                        mrca:
+                        mport:
                           type: string
-                          description: mqtt root ca; for publishing
-                        mcrt:
-                          type: string
-                          description: mqtt crt; for publishing
-                        mkey:
-                          type: string
-                          description: mqtt key; for publishing
-                        mcid:
-                          type: string
-                          description: mqtt client id; for publishing
+                          description: mqtt port; for publishing
                         devices:
                           type: array
                           items:
