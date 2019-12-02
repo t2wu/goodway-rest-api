@@ -1513,27 +1513,28 @@ paths:
                     description: json web token
                   muri:
                     type: string
+                    description: mqtt uri; for subscribing
                   mtopic:
                     type: string
-                    description: mqtt topic
+                    description: mqtt topic; for subscribing
                   mcert:
                     type: string
-                    description: cert
+                    description: mqtt cert; for subscribing
                   mkey:
                     type: string
-                    description: private key
+                    description: mqtt private key; for subscribing
                   mrca:
                     type: string
-                    description: root ca
+                    description: mqtt root ca; for subscribing
                   mcid:
                     type: string
-                    description: mqtt client id
+                    description: mqtt client id; for subscribing
                   mport:
                     type: integer
-                    description: mqtt port
+                    description: mqtt port; for subscribing
                   sessid:
                     type: string
-                    description: sessid for current app; for checking mqtt ....
+                    description: sessid for current app; for checking mqtt ....; for subscribing
         '400':
           description: Bad Request
           content:
