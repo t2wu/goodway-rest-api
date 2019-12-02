@@ -41,25 +41,25 @@ paths:
                           description: "gateway's token02"
                         dn:
                           type: string
-                          description: device name
+                          description: 'device name; '
                         muri:
                           type: string
-                          description: mqtt uri
+                          description: mqtt uri; for publishing
                         mtopic:
                           type: string
-                          description: mqtt topic
+                          description: mqtt topic; ; for publishing
                         mrca:
                           type: string
-                          description: mqtt root ca
+                          description: mqtt root ca; for publishing
                         mcrt:
                           type: string
-                          description: mqtt crt
+                          description: mqtt crt; for publishing
                         mkey:
                           type: string
-                          description: mqtt key
+                          description: mqtt key; for publishing
                         mcid:
                           type: string
-                          description: mqtt client id
+                          description: mqtt client id; for publishing
                         devices:
                           type: array
                           items:
@@ -130,31 +130,37 @@ paths:
                     description: tk02 used for connection (gateway ID)
                   muri:
                     type: string
-                    description: mqtt uri
+                    description: mqtt uri; for subscribing
                   mtopic:
                     type: string
-                    description: mqtt topic
+                    description: mqtt topic; for subscribing
                   mcert:
                     type: string
+                    description: 'mqtt cert; for subscribing & publishing'
                   mkey:
                     type: string
+                    description: 'mqtt private key; for subscribing & publishing'
                   mrca:
                     type: string
-                    description: mqtt root ca
+                    description: 'mqtt root ca; for subscribing & publishing'
                   mcid:
                     type: string
-                    description: mqtt client id
+                    description: mqtt client id; for subscribing
                   mport:
                     type: integer
+                    description: mqtt port; for subscribing
                   umtopic:
                     type: string
-                    description: "user's mqtt topic"
+                    description: "user's mqtt topic; for publishing"
                   umuri:
                     type: string
-                    description: "user's mqtt uri"
+                    description: "user's mqtt uri; for publishing"
                   umport:
                     type: integer
-                    description: "user's mqtt port"
+                    description: "user's mqtt port; for publishing"
+                  umcid:
+                    type: string
+                    description: "user's mqtt clientID; for publishing"
           headers: {}
         '400':
           description: Bad Request
