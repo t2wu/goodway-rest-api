@@ -145,7 +145,7 @@ paths:
                     description: 'mqtt root ca; for subscribing & publishing'
                   mcid:
                     type: string
-                    description: mqtt client id; for subscribing
+                    description: 'mqtt client id; for subscribing & publishing'
                   mport:
                     type: integer
                     description: mqtt port; for subscribing
@@ -158,9 +158,6 @@ paths:
                   umport:
                     type: integer
                     description: "user's mqtt port; for publishing"
-                  umcid:
-                    type: string
-                    description: "user's mqtt clientID; for publishing"
           headers: {}
         '400':
           description: Bad Request
