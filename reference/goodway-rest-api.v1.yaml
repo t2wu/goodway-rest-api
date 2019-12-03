@@ -1602,7 +1602,7 @@ paths:
                 properties:
                   gwjwt:
                     type: string
-                    description: gateway jwt for initialing gateway
+                    description: 'gateway jwt for initialing gateway & accesing cloud'
         '400':
           description: Bad Request
           content:
