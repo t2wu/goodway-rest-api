@@ -1,8 +1,16 @@
 openapi: 3.0.0
 info:
   title: Goodway Smart Home REST API
-  version: 0.0.2
+  version: 0.0.3
   description: |-
+    0.0.3
+
+    1. 新增 Scene, scene 的 kind 指名哪種類型
+    2. Room 有 onScene 跟 offScene id
+    3. 新增 patch ops, Scene PATCH 方法使用 ops (其他物件待修)
+    4. Assistant (alexa) 的 on/off 可以操控單一 device (location 放空 device 放描述性字串）
+
+
     目前 CES 沒有要實作的部分：
     1. pagination (offset, limit)
     2. 部分選取 (field)
@@ -420,43 +428,27 @@ paths:
           in: query
           name: fields
           description: Show only json object with comma separated keys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
     post:
       summary: Create a room
       description: Create a new room
       requestBody:
         content:
-          application/json:
+          application/xml:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  collections:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Room'
-            examples:
-              example-1: {}
+              $ref: '#/components/schemas/Room'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Room'
+                $ref: '#/components/schemas/Room'
         '400':
           description: Bad Request
           content:
@@ -535,6 +527,7 @@ paths:
         content:
           application/json:
             schema:
+              type: array
               items:
                 type: object
                 properties:
@@ -542,11 +535,10 @@ paths:
                     type: string
                     example: collection
                     pattern: ^collection$
-                  collections:
+                  contents:
                     type: array
                     items:
                       $ref: '#/components/schemas/Room'
-              type: array
       tags:
         - Rooms
     delete:
@@ -583,7 +575,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Delete the room
+      summary: Create a room
       operationId: ''
       description: ''
       responses:
@@ -678,7 +670,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Delete the device
+      summary: Get the device
       operationId: ''
       description: ''
       responses:
@@ -830,6 +822,8 @@ paths:
                 location:
                   type: string
                   example: living room
+                device:
+                  type: string
         description: ''
     parameters: []
   /assistant/off/:
@@ -857,6 +851,8 @@ paths:
                 location:
                   type: string
                   example: living room
+                device:
+                  type: string
         description: ''
     parameters: []
   /assistant/tracker/:
@@ -1162,7 +1158,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Delete the tracker
+      summary: Get the tracker
       operationId: ''
       description: ''
       responses:
@@ -1684,7 +1680,8 @@ paths:
           description: Show only json object with comma separated keys
     post:
       summary: Create a scene
-      tags: []
+      tags:
+        - Scenes
       responses:
         '200':
           description: OK
@@ -1709,7 +1706,8 @@ paths:
         description: ''
     put:
       summary: Update one or more scenes
-      tags: []
+      tags:
+        - Scenes
       responses:
         '200':
           description: OK
@@ -1733,7 +1731,8 @@ paths:
               $ref: '#/components/schemas/Scene'
     delete:
       summary: Delete one or more scene
-      tags: []
+      tags:
+        - Scenes
       operationId: ''
       requestBody:
         content:
@@ -1759,8 +1758,49 @@ paths:
                 $ref: '#/components/schemas/Error'
     patch:
       summary: Update one or more scenes (diff)
-      tags: []
+      tags:
+        - Scenes
       operationId: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contents:
+                  type: array
+                  description: Array of device operations
+                  items:
+                    type: object
+                    properties:
+                      ops:
+                        type: array
+                        description: Array of operations
+                        items:
+                          $ref: '#/components/schemas/PatchOp'
+                      id:
+                        type: string
+                        description: Scene id to modify
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scenes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Scene'
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   '/scenes/{id}':
     parameters:
       - type: string
@@ -1801,6 +1841,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      tags:
+        - Scenes
     patch:
       summary: ''
       operationId: 'patch-scenes-{id}'
@@ -1817,6 +1859,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ops:
+                  type: array
+                  description: Array of operations
+                  items:
+                    $ref: '#/components/schemas/PatchOp'
+      tags:
+        - Scenes
     delete:
       summary: ''
       operationId: 'delete-scenes-{id}'
@@ -1833,6 +1888,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      tags:
+        - Scenes
 components:
   schemas:
     Gateway:
@@ -1958,18 +2015,18 @@ components:
               id:
                 type: string
                 description: device id
-        onScene:
+        onSceneId:
           type: string
           description: Away scene id for this room
-        offScene:
+        offSceneId:
           type: string
           description: Home scene id for this room
     Error:
       title: Error
       type: object
       properties:
-        error:
-          type: string
+        code:
+          type: integer
         developerMessage:
           type: string
         userMessage:
@@ -1977,6 +2034,7 @@ components:
         moreInfo:
           type: string
           example: 'https://xyz.com/doc/errors/101'
+      description: ''
     Tracker:
       title: Tracker
       type: object
@@ -2034,6 +2092,25 @@ components:
             - roomOnScene
             - roomOffScene
             - customScene
+    PatchOp:
+      title: PatchOp
+      type: object
+      properties:
+        op:
+          type: string
+          enum:
+            - add
+            - replace
+            - remove
+          example: add
+          description: Type of operation
+        path:
+          type: string
+          description: Path to manipulate
+        value:
+          type: string
+          description: Value of manipulation (for add or replace)
+      description: Patch operation
   securitySchemes:
     API Key - 1:
       type: oauth2
