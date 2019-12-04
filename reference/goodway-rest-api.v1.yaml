@@ -1484,7 +1484,7 @@ paths:
   /users:
     post:
       summary: ''
-      operationId: post-users
+      operationId: ''
       responses:
         '200':
           description: OK
@@ -1632,6 +1632,207 @@ paths:
                 - uuid
       tags:
         - Gateways
+  /scenes/:
+    get:
+      summary: Get all scenes
+      tags:
+        - Scenes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    example: ^collection$
+                    pattern: collection
+                  contents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Scene'
+          headers: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: ''
+      requestBody: {}
+      parameters:
+        - schema:
+            type: number
+            minimum: 0
+            maximum: 0
+          in: query
+          name: offset
+          description: Pagination offset (from which record)
+        - schema:
+            type: number
+            minimum: 1
+          in: query
+          name: limit
+          description: Pagination limit (how many records returned)
+        - schema:
+            type: string
+            pattern: "(\\d+)(,\\d+)*"
+          in: query
+          name: fields
+          description: Show only json object with comma separated keys
+    post:
+      summary: Create a scene
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Scene'
+        description: ''
+    put:
+      summary: Update one or more scenes
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Scene'
+    delete:
+      summary: Delete one or more scene
+      tags: []
+      operationId: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Scene'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: Update one or more scenes (diff)
+      tags: []
+      operationId: ''
+  '/scenes/{id}':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Scenes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: ''
+    put:
+      summary: ''
+      operationId: 'put-scenes-{id}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: ''
+      operationId: 'patch-scenes-{id}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: ''
+      operationId: 'delete-scenes-{id}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Gateway:
@@ -1736,6 +1937,7 @@ components:
     Room:
       title: Room
       type: object
+      x-examples: {}
       properties:
         id:
           type: string
@@ -1749,28 +1951,19 @@ components:
           type: string
           example: 1f00675c-d18f-4ff6-b042-fdbe3403939a
         devices:
-          type: object
-          properties:
-            kind:
-              type: string
-              example: collections
-              pattern: ^collections$
-            contents:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uuid
-                partial:
-                  example: true
-                  type: boolean
-                kind:
-                  type: string
-                  example: Device
-        href:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: device id
+        onScene:
           type: string
-          example: /rooms/fdae22a2-a4c6-461b-83c3-d0368dd46329
-      x-examples: {}
+          description: Away scene id for this room
+        offScene:
+          type: string
+          description: Home scene id for this room
     Error:
       title: Error
       type: object
@@ -1800,6 +1993,47 @@ components:
           type: string
         href:
           type: string
+    Scene:
+      title: Scene
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: name of the scene
+        devices:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: device id
+              action:
+                type: object
+                description: 'Actions for this device (which, and what)'
+                properties:
+                  light:
+                    type: string
+                    example: '"on"'
+                    description: Turn light on or off
+        roomId:
+          type: string
+          description: 'If tag is "roomOnScene" or "roomOffScene", then this roomId show which room it belongs to.'
+        kind:
+          type: string
+          description: What kind of scene it is (can be customized)
+          example: awayScene
+          enum:
+            - homeScene
+            - awayScene
+            - bedScene
+            - awakeScene
+            - travelScene
+            - roomOnScene
+            - roomOffScene
+            - customScene
   securitySchemes:
     API Key - 1:
       type: oauth2
