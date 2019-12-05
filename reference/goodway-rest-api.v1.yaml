@@ -527,7 +527,6 @@ paths:
         content:
           application/json:
             schema:
-              type: array
               items:
                 type: object
                 properties:
@@ -539,6 +538,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Room'
+              type: array
       tags:
         - Rooms
     delete:
@@ -1489,9 +1489,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  c:
-                    description: '1:ok'
-                    type: integer
                   jwt:
                     type: string
                     description: json web token
@@ -1519,6 +1516,9 @@ paths:
                   sessid:
                     type: string
                     description: sessid for current app; for checking mqtt ....; for subscribing
+                  mrtopic:
+                    type: string
+                    description: mqtt return topic
         '400':
           description: Bad Request
           content:
@@ -1628,6 +1628,95 @@ paths:
                 - uuid
       tags:
         - Gateways
+  '/scenes/{id}':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Scenes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: ''
+    put:
+      summary: ''
+      operationId: 'put-scenes-{id}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Scenes
+    patch:
+      summary: ''
+      operationId: 'patch-scenes-{id}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ops:
+                  type: array
+                  description: Array of operations
+                  items:
+                    $ref: '#/components/schemas/PatchOp'
+      tags:
+        - Scenes
+    delete:
+      summary: ''
+      operationId: 'delete-scenes-{id}'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Scenes
   /scenes/:
     get:
       summary: Get all scenes
@@ -1801,95 +1890,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  '/scenes/{id}':
-    parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
-    get:
-      summary: Your GET endpoint
-      tags:
-        - Scenes
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Scene'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      operationId: ''
-    put:
-      summary: ''
-      operationId: 'put-scenes-{id}'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Scene'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      tags:
-        - Scenes
-    patch:
-      summary: ''
-      operationId: 'patch-scenes-{id}'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Scene'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                ops:
-                  type: array
-                  description: Array of operations
-                  items:
-                    $ref: '#/components/schemas/PatchOp'
-      tags:
-        - Scenes
-    delete:
-      summary: ''
-      operationId: 'delete-scenes-{id}'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Scene'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      tags:
-        - Scenes
 components:
   schemas:
     Gateway:
@@ -1994,7 +1994,6 @@ components:
     Room:
       title: Room
       type: object
-      x-examples: {}
       properties:
         id:
           type: string
@@ -2015,18 +2014,17 @@ components:
               id:
                 type: string
                 description: device id
-        onSceneId:
-          type: string
-          description: Away scene id for this room
         offSceneId:
           type: string
           description: Home scene id for this room
+        onSceneId:
+          type: string
+          description: Away scene id for this room
+      x-examples: {}
     Error:
       title: Error
       type: object
       properties:
-        code:
-          type: integer
         developerMessage:
           type: string
         userMessage:
@@ -2034,6 +2032,8 @@ components:
         moreInfo:
           type: string
           example: 'https://xyz.com/doc/errors/101'
+        code:
+          type: integer
       description: ''
     Tracker:
       title: Tracker
@@ -2051,6 +2051,25 @@ components:
           type: string
         href:
           type: string
+    PatchOp:
+      title: PatchOp
+      type: object
+      properties:
+        op:
+          type: string
+          enum:
+            - add
+            - replace
+            - remove
+          example: add
+          description: Type of operation
+        path:
+          type: string
+          description: Path to manipulate
+        value:
+          type: string
+          description: Value of manipulation (for add or replace)
+      description: Patch operation
     Scene:
       title: Scene
       type: object
@@ -2092,25 +2111,6 @@ components:
             - roomOnScene
             - roomOffScene
             - customScene
-    PatchOp:
-      title: PatchOp
-      type: object
-      properties:
-        op:
-          type: string
-          enum:
-            - add
-            - replace
-            - remove
-          example: add
-          description: Type of operation
-        path:
-          type: string
-          description: Path to manipulate
-        value:
-          type: string
-          description: Value of manipulation (for add or replace)
-      description: Patch operation
   securitySchemes:
     API Key - 1:
       type: oauth2
