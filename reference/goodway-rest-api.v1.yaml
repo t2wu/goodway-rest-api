@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Goodway Smart Home REST API
-  version: 0.0.3
+  version: 0.0.4-oas3
   description: |-
     0.0.3
 
