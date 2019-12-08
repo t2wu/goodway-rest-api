@@ -370,16 +370,17 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Gateway'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                description: ''
+                properties:
+                  code:
+                    type: integer
+                    description: '3:gateway error, 4:children available'
       tags:
         - Gateways
       description: Delete the gateway based on the id
@@ -758,16 +759,16 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Device'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '3:device error'
       tags:
         - Devices
       description: Delete the device based on the id
@@ -1476,6 +1477,7 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
         - Devices
+      parameters: []
     parameters: []
   /users:
     post:
