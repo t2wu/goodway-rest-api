@@ -1192,19 +1192,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tracker'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse eror, 3:device error, 4:same name, '
       description: ''
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Tracker'
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: tracker name
+        description: ''
       tags:
         - Trackers
     patch:
