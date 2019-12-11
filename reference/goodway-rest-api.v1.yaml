@@ -407,20 +407,27 @@ paths:
               schema:
                 type: object
                 properties:
-                  kind:
-                    type: string
-                    example: collection
-                    pattern: ^collection$
-                  contents:
+                  rooms:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Room'
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        active:
+                          type: string
+                          description: '1:on, 2:off'
+                        devices:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
         '400':
           description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
       description: Get all rooms (light switches) this user has.
       tags:
         - Rooms
@@ -441,33 +448,40 @@ paths:
           in: query
           name: fields
           description: Show only json object with comma separated keys
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
+      requestBody: {}
     post:
       summary: Create a room
       description: Create a new room
       requestBody:
         content:
-          application/xml:
+          application/json:
             schema:
-              $ref: '#/components/schemas/Room'
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "room's name"
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Room'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "room's id"
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse error'
       tags:
         - Rooms
     put:
