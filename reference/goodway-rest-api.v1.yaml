@@ -328,19 +328,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Gateway'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse error, 3:gateway error, 4:same name'
       description: ''
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Gateway'
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: new name
       tags:
         - Gateways
     patch:
