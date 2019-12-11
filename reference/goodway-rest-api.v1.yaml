@@ -1815,7 +1815,7 @@ paths:
                   description: "device's ID"
                 active:
                   type: integer
-                  description: '1:on, 2:off  (active for op="add" or op="update only))'
+                  description: '1:on, 2:off  (active for op="add" or op="update" only))'
         description: ''
       tags:
         - Scenes
