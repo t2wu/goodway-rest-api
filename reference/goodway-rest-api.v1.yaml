@@ -669,18 +669,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Room'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: "2:parse error, 3:group error, 4:device unailable, \n5:duplicate(op=\"add\")\n5:device not in room(op=\"del\")"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Room'
+              type: object
+              properties:
+                op:
+                  type: string
+                  description: add or del
+                id:
+                  type: string
+                  description: "device's ID"
+        description: ''
       tags:
         - Rooms
     delete:
