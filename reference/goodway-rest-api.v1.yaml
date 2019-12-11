@@ -1749,15 +1749,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Scene'
+                type: object
+                description: '1:ok'
+                properties:
+                  code:
+                    type: integer
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse error, 3:scene error, 4:same name'
       tags:
         - Scenes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
     patch:
       summary: ''
       operationId: 'patch-scenes-{id}'
@@ -1796,13 +1812,21 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Scene'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '3:scene error, 4:children available'
       tags:
         - Scenes
   /scenes/:
@@ -1930,28 +1954,12 @@ paths:
       tags:
         - Scenes
       operationId: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Scene'
+      requestBody: {}
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Scene'
         '400':
           description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
     patch:
       summary: Update one or more scenes (diff)
       tags:
