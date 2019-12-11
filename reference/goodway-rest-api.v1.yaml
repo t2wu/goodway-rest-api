@@ -635,19 +635,30 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Room'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse error, 3:group error, 4:same name'
       description: ''
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Room'
+              type: object
+              properties:
+                name:
+                  type: string
       tags:
         - Rooms
     patch:
@@ -680,13 +691,21 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Room'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                description: '3:group error, 4:children available'
+                properties:
+                  code:
+                    type: integer
       tags:
         - Rooms
       description: Delete the room based on the id
