@@ -1783,24 +1783,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Scene'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: |-
+                      2:parse error, 3:scene error, 4:device unavailable, 5:active error (op="add", op="update")
+                      6:duplicate(op="add")
+                      6:device doesn't in the scene (op="update")
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                ops:
-                  type: array
-                  description: Array of operations
-                  items:
-                    $ref: '#/components/schemas/PatchOp'
+                op:
+                  type: string
+                  description: add or del or update;  update for active updating
+                id:
+                  type: string
+                  description: "device's ID"
+                active:
+                  type: integer
+                  description: '1:on, 2:off  (active for op="add" or op="update only))'
+        description: ''
       tags:
         - Scenes
     delete:
