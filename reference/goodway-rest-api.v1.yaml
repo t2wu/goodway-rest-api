@@ -710,27 +710,39 @@ paths:
           description: Show only json object with comma separated keys
     put:
       summary: Update the device
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: new name
+      tags:
+        - Devices
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Device'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-      description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Device'
-      tags:
-        - Devices
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse error, 3:device error, 4:same name'
     patch:
       summary: Patch the device
       responses:
