@@ -1813,26 +1813,35 @@ paths:
       responses:
         '200':
           description: OK
+          headers: {}
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  kind:
-                    type: string
-                    example: ^collection$
-                    pattern: collection
-                  contents:
+                  scenes:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Scene'
-          headers: {}
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: "sence's ID"
+                        name:
+                          type: string
+                        devices:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                description: "device's id"
+                              active:
+                                type: integer
+                                description: '1:on, 2:off'
         '400':
           description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
       operationId: ''
       requestBody: {}
       parameters:
@@ -1862,25 +1871,35 @@ paths:
       responses:
         '200':
           description: OK
+          headers: {}
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Scene'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse error'
       operationId: ''
       requestBody:
+        description: ''
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Scene'
-        description: ''
+              type: object
+              properties:
+                name:
+                  type: string
     put:
       summary: Update one or more scenes
       tags:
