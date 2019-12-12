@@ -461,6 +461,9 @@ paths:
                 name:
                   type: string
                   description: "room's name"
+                gid:
+                  type: string
+                  description: gateway id
       responses:
         '200':
           description: OK
@@ -1932,6 +1935,9 @@ paths:
               properties:
                 name:
                   type: string
+                gid:
+                  type: string
+                  description: gateway id
     put:
       summary: Update one or more scenes
       tags:
