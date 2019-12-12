@@ -1713,7 +1713,8 @@ paths:
         - Gateways
   '/scenes/{id}':
     parameters:
-      - type: string
+      - schema:
+          type: string
         name: id
         in: path
         required: true
@@ -1727,7 +1728,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Scene'
+                type: object
+                properties:
+                  scenes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: secene token
+                        gid:
+                          type: string
+                          description: gateway token
+                        name:
+                          type: string
+                        devices:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              active:
+                                type: integer
+                                description: '1:on, 2:off'
         '400':
           description: Bad Request
           content:
@@ -1735,6 +1760,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       operationId: ''
+      description: ''
     put:
       summary: ''
       operationId: 'put-scenes-{id}'
