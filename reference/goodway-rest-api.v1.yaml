@@ -602,22 +602,14 @@ paths:
         in: path
         required: true
     get:
-      summary: Create a room
+      summary: get rooms of gateway
       operationId: ''
       description: ''
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Room'
         '400':
           description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
       tags:
         - Rooms
       parameters:
