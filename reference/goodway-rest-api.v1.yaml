@@ -2045,6 +2045,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /assistant/parse:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Virtual assistant
+      responses: {}
+      operationId: get-assistant-parse
+    post:
+      summary: ''
+      operationId: post-assistant-parse
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sentence:
+                  type: string
+        description: ''
 components:
   schemas:
     Gateway:
