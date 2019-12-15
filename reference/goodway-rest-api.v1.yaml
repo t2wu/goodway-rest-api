@@ -2067,6 +2067,8 @@ paths:
                 sentence:
                   type: string
         description: ''
+      tags:
+        - Virtual assistant
 components:
   schemas:
     Gateway:
