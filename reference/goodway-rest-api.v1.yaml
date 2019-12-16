@@ -877,13 +877,6 @@ paths:
       responses:
         '200':
           description: OK
-        '400':
-          description: Bad Request
-          headers: {}
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
       description: 'For command such as "Alexa, execute scene {scene}"'
       tags:
         - Virtual assistant
@@ -893,7 +886,7 @@ paths:
             schema:
               type: object
               properties:
-                scene:
+                id:
                   type: string
                   example: away
   /assistant/on/:
