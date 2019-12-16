@@ -907,6 +907,8 @@ paths:
                 id:
                   type: string
                   example: away
+                  description: scene id
+        description: ''
   /assistant/on/:
     post:
       summary: 'Turn on all lights [in the living room]'
