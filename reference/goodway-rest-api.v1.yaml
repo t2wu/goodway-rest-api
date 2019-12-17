@@ -885,6 +885,8 @@ paths:
                   code:
                     type: integer
                     description: '1:ok'
+              examples:
+                example-1: {}
         '400':
           description: Bad Request
           content:
@@ -904,10 +906,10 @@ paths:
             schema:
               type: object
               properties:
-                id:
+                keyward:
                   type: string
                   example: away
-                  description: scene id
+                  description: ''
         description: ''
   /assistant/on/:
     post:
@@ -2097,6 +2099,7 @@ paths:
               properties:
                 sentence:
                   type: string
+            examples: {}
         description: ''
       tags:
         - Virtual assistant
