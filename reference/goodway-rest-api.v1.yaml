@@ -304,13 +304,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Gateway'
+                type: object
+                properties:
+                  gateway:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      dn:
+                        type: string
+                      devices:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            dn:
+                              type: string
+                            status:
+                              type: string
+                              description: on/off
+                            type:
+                              type: integer
+                              description: '12:tracker, 13:lightsw'
         '400':
           description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
       tags:
         - Gateways
       parameters:
@@ -320,6 +339,7 @@ paths:
           in: query
           name: fields
           description: Show only json object with comma separated keys
+      requestBody: {}
     put:
       summary: Update the gateway
       responses:
