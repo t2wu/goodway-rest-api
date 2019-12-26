@@ -1001,7 +1001,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse error, 3:not avialable'
       description: 'Find the item such for command such as "Alexa, where is my wallet" where "wallet" is the item'
       tags:
         - Virtual assistant
