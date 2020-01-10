@@ -410,10 +410,10 @@ paths:
                 type: object
                 description: ''
                 properties:
-                  code:
+                  c:
                     type: integer
                     description: '3:gateway error, 4:children available, 402:jwt error'
-                  code2:
+                  c2:
                     type: integer
                     description: '2: expire ... 3:other error 4:user error'
       tags:
