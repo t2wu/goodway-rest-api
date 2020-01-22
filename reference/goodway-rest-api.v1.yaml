@@ -2138,6 +2138,24 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:param error, 3:name format error, 4:mail format error, 5:pass length error, 6:pass unmatch, 7:pass format error (digitials and letters only)'
       tags:
         - Users
       requestBody:
