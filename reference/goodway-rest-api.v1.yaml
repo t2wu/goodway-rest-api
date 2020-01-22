@@ -328,6 +328,8 @@ paths:
                             type:
                               type: integer
                               description: '12:tracker, 13:lightsw'
+              examples:
+                example-1: {}
         '400':
           description: Bad Request
       tags:
@@ -2129,6 +2131,56 @@ paths:
         description: ''
       tags:
         - Virtual assistant
+  /users/join:
+    post:
+      summary: ''
+      operationId: post-users-join
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mail:
+                  type: string
+                  description: email
+                pwd:
+                  type: string
+                  description: password; at least 5 characters
+                rpwd:
+                  type: string
+                  description: retype password
+                name:
+                  type: string
+                  description: user name;  at least 5 characters
+        description: ''
+  '/users/activation/{atext}':
+    parameters:
+      - schema:
+          type: string
+        name: atext
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Users
+      responses: {}
+      operationId: get-users-activation-atext
+  /users/reactivation:
+    post:
+      summary: ''
+      operationId: post-users-reactivation
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Users
 components:
   schemas:
     Gateway:
