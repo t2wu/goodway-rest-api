@@ -2210,12 +2210,7 @@ paths:
                     type: integer
                     description: '3:user error, 4:auth already, 5:user has been banned, 6:auth code (atext) expired'
       operationId: get-users-activation-atext
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
+      requestBody: {}
       description: ''
   /users/reactivation:
     post:
