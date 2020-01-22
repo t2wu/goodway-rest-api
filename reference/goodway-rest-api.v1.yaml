@@ -2188,8 +2188,35 @@ paths:
       summary: Your GET endpoint
       tags:
         - Users
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '3:user error, 4:auth already, 5:user has been banned, 6:auth code (atext) expired'
       operationId: get-users-activation-atext
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      description: ''
   /users/reactivation:
     post:
       summary: ''
