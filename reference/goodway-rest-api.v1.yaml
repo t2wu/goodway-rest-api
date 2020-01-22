@@ -1693,7 +1693,7 @@ paths:
             schema:
               type: object
               properties:
-                mn:
+                name:
                   type: string
                   description: mobile number
                 pwd:
