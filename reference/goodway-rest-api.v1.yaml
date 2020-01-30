@@ -332,6 +332,14 @@ paths:
                 example-1: {}
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '3:gateway error'
       tags:
         - Gateways
       parameters:
