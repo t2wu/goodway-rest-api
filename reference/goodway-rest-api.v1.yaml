@@ -2163,7 +2163,7 @@ paths:
                 properties:
                   code:
                     type: integer
-                    description: '2:param error, 3:name format error, 4:mail format error, 5:pass length error, 6:pass unmatch, 7:pass format error (digitials and letters only) 8:name duplicate, 9:account has been banned, 10: user exist; not authorized, 11:user exist; email registered already, 12:others, 13:mail server error'
+                    description: '2:param error, 3:name format error, 4:mail format error, 5:pass length error, 6:pass unmatch, 7:pass format error (digitials and letters only) 8:not authorized (user), 9:account has been banned(user), 10: name duplicate; 11.not authorized(mail), 12:account has been banned(mail); 13. mail duplicate 14. send mail error'
       tags:
         - Users
       requestBody:
