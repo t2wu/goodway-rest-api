@@ -2256,6 +2256,22 @@ paths:
                 name:
                   type: string
                   description: user name
+  /system/info:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - system
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+      operationId: get-system-info
 components:
   schemas:
     Gateway:
