@@ -942,6 +942,8 @@ paths:
                 keyword:
                   type: string
                   description: scene name
+                uid:
+                  type: string
         description: ''
   /assistant/on/:
     post:
