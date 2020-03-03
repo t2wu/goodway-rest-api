@@ -2130,6 +2130,7 @@ paths:
                     type: integer
                     description: '21:room not available, 22:no items in room, 23:device no available, 24:not mapping device in room, 31:room not available, 32:no items in room, 41:room not available, 42:no items in room, 43: device not available, 44:not mapping device in room'
       requestBody:
+        description: ''
         content:
           application/json:
             schema:
@@ -2141,9 +2142,6 @@ paths:
                   type: string
                 uid:
                   type: string
-            examples:
-              example-1: {}
-        description: ''
       tags:
         - Virtual assistant
   /users/join:
