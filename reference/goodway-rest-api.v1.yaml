@@ -1031,6 +1031,8 @@ paths:
                 item:
                   type: string
                   example: wallet
+            examples:
+              example-1: {}
   '/gateways/{id}/rooms/':
     parameters:
       - type: string
@@ -2135,7 +2137,12 @@ paths:
               properties:
                 sentence:
                   type: string
-            examples: {}
+                action:
+                  type: string
+                uid:
+                  type: string
+            examples:
+              example-1: {}
         description: ''
       tags:
         - Virtual assistant
