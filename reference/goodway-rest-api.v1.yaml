@@ -1031,6 +1031,8 @@ paths:
                 item:
                   type: string
                   example: wallet
+                uid:
+                  type: string
             examples:
               example-1: {}
   '/gateways/{id}/rooms/':
@@ -2140,6 +2142,7 @@ paths:
                   type: string
                 action:
                   type: string
+                  description: on/off
                 uid:
                   type: string
       tags:
