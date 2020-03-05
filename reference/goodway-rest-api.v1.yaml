@@ -945,64 +945,6 @@ paths:
                 uid:
                   type: string
         description: ''
-  /assistant/on/:
-    post:
-      summary: 'Turn on all lights [in the living room]'
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-          headers: {}
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      description: 'For command such as "Alexa, turn on all lights" or "Alexa, turn on all lights in the living room".'
-      tags:
-        - Virtual assistant
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                location:
-                  type: string
-                  example: living room
-                device:
-                  type: string
-        description: ''
-    parameters: []
-  /assistant/off/:
-    post:
-      summary: 'Turn off all lights [in the living room]'
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-          headers: {}
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      description: 'For command such as "Alexa, turn off all lights" or "Alexa, turn off all lights in the living room".'
-      tags:
-        - Virtual assistant
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                location:
-                  type: string
-                  example: living room
-                device:
-                  type: string
-        description: ''
-    parameters: []
   /assistant/tracker/:
     parameters: []
     post:
@@ -2282,6 +2224,50 @@ paths:
                   version:
                     type: string
       operationId: get-system-info
+  '/gateways/{id}/rtoken':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Gateways
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gwjwt:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: 'error code; 2:parse error, 3:dtk error, 5:token error, 7:not within 10days, 8:user not exist, 9:user has been banned, 10:user not auth yet, 11:renew error'
+      operationId: get-gateways-id-rtoken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: ''
 components:
   schemas:
     Gateway:
