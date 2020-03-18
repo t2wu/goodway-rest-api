@@ -98,7 +98,8 @@ paths:
     parameters: []
   '/gateways/{id}':
     parameters:
-      - type: string
+      - schema:
+          type: string
         name: id
         in: path
         required: true
@@ -136,8 +137,7 @@ paths:
                             type:
                               type: integer
                               description: '12:tracker, 13:lightsw'
-              examples:
-                example-1: {}
+              examples: {}
         '400':
           description: Bad Request
           content:
@@ -150,14 +150,6 @@ paths:
                     description: '3:gateway error'
       tags:
         - Gateways
-      parameters:
-        - schema:
-            type: string
-            pattern: "(\\d+)(,\\d+)*"
-          in: query
-          name: fields
-          description: Show only json object with comma separated keys
-      requestBody: {}
     put:
       summary: Update the gateway
       responses:
@@ -215,108 +207,9 @@ paths:
       tags:
         - Gateways
       description: Delete the gateway based on the id
-  /rooms/:
-    get:
-      summary: Get all rooms
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  rooms:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        name:
-                          type: string
-                        active:
-                          type: string
-                          description: '1:on, 2:off'
-                        devices:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-        '400':
-          description: Bad Request
-      description: Get all rooms (light switches) this user has.
-      tags:
-        - Rooms
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: offset
-          description: Pagination offset (from which record)
-        - schema:
-            type: string
-          in: query
-          name: limit
-          description: Pagination limit (how many records returned)
-        - schema:
-            type: string
-            pattern: "(\\d+)(,\\d+)*"
-          in: query
-          name: fields
-          description: Show only json object with comma separated keys
-      requestBody: {}
-    post:
-      summary: Create a room
-      description: Create a new room
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: "room's name"
-                gid:
-                  type: string
-                  description: gateway id
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: "room's id"
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    description: '2:parse error'
-      tags:
-        - Rooms
-    parameters: []
   '/rooms/{id}':
-    parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
     get:
       summary: get rooms of gateway
-      operationId: ''
-      description: ''
       responses:
         '200':
           description: OK
@@ -333,9 +226,6 @@ paths:
                         id:
                           type: string
                           description: room token
-                        gid:
-                          type: string
-                          description: gateway token
                         name:
                           type: string
                           description: ''
@@ -350,19 +240,24 @@ paths:
                               id:
                                 type: string
                                 description: device token
+                        gid:
+                          type: string
+                          description: gateway token
         '400':
           description: Bad Request
+      description: ''
       tags:
         - Rooms
-      parameters:
-        - schema:
-            type: string
-            pattern: "(\\d+)(,\\d+)*"
-          in: query
-          name: fields
-          description: Show only json object with comma separated keys
-    put:
-      summary: Update the room
+      parameters: []
+      operationId: ''
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: Delete the room
       responses:
         '200':
           description: OK
@@ -380,21 +275,13 @@ paths:
             application/json:
               schema:
                 type: object
+                description: '3:group error, 4:children available'
                 properties:
                   code:
                     type: integer
-                    description: '2:parse error, 3:group error, 4:same name'
-      description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
       tags:
         - Rooms
+      description: Delete the room based on the id
     patch:
       summary: Patch the room
       responses:
@@ -433,8 +320,8 @@ paths:
         description: ''
       tags:
         - Rooms
-    delete:
-      summary: Delete the room
+    put:
+      summary: Update the room
       responses:
         '200':
           description: OK
@@ -452,16 +339,25 @@ paths:
             application/json:
               schema:
                 type: object
-                description: '3:group error, 4:children available'
                 properties:
                   code:
                     type: integer
+                    description: '2:parse error, 3:group error, 4:same name'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
       tags:
         - Rooms
-      description: Delete the room based on the id
   '/devices/{id}':
     parameters:
-      - type: string
+      - schema:
+          type: string
         name: id
         in: path
         required: true
@@ -596,7 +492,8 @@ paths:
               example-1: {}
   '/trackers/{id}':
     parameters:
-      - type: string
+      - schema:
+          type: string
         name: id
         in: path
         required: true
@@ -1158,9 +1055,6 @@ paths:
                   code:
                     type: integer
                     description: '3:user error, 4:auth already, 5:user has been banned, 6:auth code (atext) expired'
-      operationId: get-users-activation-atext
-      requestBody: {}
-      description: ''
   /users/reactivation:
     post:
       summary: ''
@@ -1221,7 +1115,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
+      summary: ''
       tags:
         - Gateways
       responses:
@@ -1244,19 +1138,87 @@ paths:
                   code:
                     type: integer
                     description: 'error code; 2:parse error, 3:dtk error, 5:token error, 7:not within 10days, 8:user not exist, 9:user has been banned, 10:user not auth yet, 11:renew error'
-      operationId: get-gateways-id-rtoken
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
+
       parameters:
         - schema:
             type: string
           in: header
           name: Authorization
           description: ''
+  /rooms/:
+    get:
+      summary: Get all rooms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rooms:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        active:
+                          type: string
+                          description: '1:on, 2:off'
+                        devices:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+        '400':
+          description: Bad Request
+      description: Get all rooms (light switches) this user has.
+      tags:
+        - Rooms
+    post:
+      summary: Create a room
+      description: Create a new room
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "room's name"
+                gid:
+                  type: string
+                  description: gateway id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "room's id"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '2:parse error'
+      tags:
+        - Rooms
+    parameters: []
 components:
   schemas: {}
   securitySchemes:
