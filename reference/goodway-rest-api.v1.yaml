@@ -1,19 +1,9 @@
 openapi: 3.0.0
 info:
   title: Goodway Smart Home REST API
-  version: 0.0.4-oas3
+  version: "1.27.2"
   description: |-
-    0.0.3
 
-    1. 新增 Scene, scene 的 kind 指名哪種類型
-    2. Room 有 onScene 跟 offScene id
-    3. 新增 patch ops, Scene PATCH 方法使用 ops (其他物件待修)
-    4. Assistant (alexa) 的 on/off 可以操控單一 device (location 放空 device 放描述性字串）
-
-
-    目前 CES 沒有要實作的部分：
-    1. pagination (offset, limit)
-    2. 部分選取 (field)
   contact:
     name: John Peng
     email: john_peng@goodway.com.tw
