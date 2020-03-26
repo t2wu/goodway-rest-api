@@ -106,7 +106,7 @@ paths:
         in: path
         required: true
     get:
-      summary: the gateway
+      summary: Get Gateway Infomation
       operationId: ''
       description: ''
       responses:
@@ -219,7 +219,7 @@ paths:
       description: Delete the gateway based on the id
   '/rooms/{id}':
     get:
-      summary: get rooms of gateway
+      summary: Get rooms of gateway
       responses:
         '200':
           description: OK
@@ -606,7 +606,7 @@ paths:
     parameters: []
   /users:
     post:
-      summary: ''
+      summary: Activation link
       operationId: ''
       responses:
         '200':
@@ -713,7 +713,7 @@ paths:
         description: ''
   /gateways/jwt:
     post:
-      summary: ''
+      summary: Get jwt of gateway to connect to cloud
       operationId: post-gateways-jwt
       responses:
         '200':
@@ -948,7 +948,7 @@ paths:
                   description: gateway id
   /assistant/parse:
     post:
-      summary: ''
+      summary: Parse the sentence from user
       operationId: post-assistant-parse
       responses:
         '200':
@@ -1103,7 +1103,7 @@ paths:
                   description: user name
   /system/info:
     get:
-      summary: Your GET endpoint
+      summary: Get System Info
       tags:
         - system
       responses:
@@ -1125,7 +1125,7 @@ paths:
         in: path
         required: true
     get:
-      summary: ''
+      summary: Gateway token refresh
       tags:
         - Gateways
       responses:
