@@ -606,7 +606,7 @@ paths:
     parameters: []
   /users:
     post:
-      summary: Activation link
+      summary: User login
       operationId: ''
       responses:
         '200':
@@ -763,7 +763,7 @@ paths:
         in: path
         required: true
     get:
-      summary: ''
+      summary: Get scenes of gateway
       tags:
         - Scenes
       responses:
@@ -802,7 +802,7 @@ paths:
       operationId: ''
       description: ''
     put:
-      summary: ''
+      summary: Update the scene
       operationId: 'put-scenes-{id}'
       responses:
         '200':
@@ -836,7 +836,7 @@ paths:
                 name:
                   type: string
     patch:
-      summary: ''
+      summary: Patch the scene
       operationId: 'patch-scenes-{id}'
       responses:
         '200':
@@ -881,7 +881,7 @@ paths:
       tags:
         - Scenes
     delete:
-      summary: ''
+      summary: Delete the scene
       operationId: 'delete-scenes-{id}'
       responses:
         '200':
@@ -989,7 +989,7 @@ paths:
         - Virtual assistant
   /users/join:
     post:
-      summary: ''
+      summary: User registration
       operationId: post-users-join
       responses:
         '200':
@@ -1041,7 +1041,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
+      summary: Account activation after registration
       tags:
         - Users
       responses:
@@ -1067,7 +1067,7 @@ paths:
                     description: '3:user error, 4:auth already, 5:user has been banned, 6:auth code (atext) expired'
   /users/reactivation:
     post:
-      summary: ''
+      summary: Account re-activation after expiration time
       operationId: post-users-reactivation
       responses:
         '200':
