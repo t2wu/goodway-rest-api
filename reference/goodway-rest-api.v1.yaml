@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Goodway Smart Home REST API
-  version: 1.28.1
+  version: 1.30.1
   description: ''
   contact:
     name: John Peng
@@ -76,6 +76,8 @@ paths:
                   umport:
                     type: integer
                     description: "user's mqtt port; for publishing"
+              examples:
+                example-1: {}
           headers: {}
         '400':
           description: Bad Request
@@ -190,6 +192,14 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: '1:ok'
         '400':
           description: Bad Request
           content:
@@ -198,10 +208,10 @@ paths:
                 type: object
                 description: ''
                 properties:
-                  c:
+                  code:
                     type: integer
                     description: '3:gateway error, 4:children available, 402:jwt error'
-                  c2:
+                  code2:
                     type: integer
                     description: '2: expire ... 3:other error 4:user error'
       tags:
